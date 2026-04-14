@@ -41,7 +41,7 @@ st.markdown("""
 
 # Header
 st.markdown('<p class="main-header">🏠 UrbanNest Analytics</p>', unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #666;'>Dynamic House Rent Prediction Engine</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #666;'>House Rent Prediction Engine</h3>", unsafe_allow_html=True)
 
 st.markdown("---")
 
