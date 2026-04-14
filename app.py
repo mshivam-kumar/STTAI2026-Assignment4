@@ -78,6 +78,26 @@ def load_model_and_encoders():
         st.error(f"Error loading model: {e}")
         return None, None, None, None, None, None, None
 
+
+@st.cache_data
+def load_city_location_mapping(all_locations):
+    """Load city -> locations mapping from training data for dynamic UI filtering."""
+    try:
+        df = pd.read_csv('Dataset/train.csv', usecols=['city', 'location'])
+        df = df.dropna(subset=['city', 'location']).copy()
+        df['city'] = df['city'].astype(str).str.strip()
+        df['location'] = df['location'].astype(str).str.strip()
+        df = df[(df['city'] != '') & (df['location'] != '')]
+
+        city_location_map = {
+            city: sorted(group['location'].unique().tolist())
+            for city, group in df.groupby('city')
+        }
+        return city_location_map
+    except Exception:
+        # Fallback: if dataset isn't available, keep global location list for all cities
+        return {}
+
 # Load model
 model, location_encoder, city_encoder, status_encoder, property_type_encoder, feature_columns, categorical_mappings = load_model_and_encoders()
 
@@ -90,6 +110,7 @@ locations = sorted(categorical_mappings['location']['classes'])
 cities = sorted(categorical_mappings['city']['classes'])
 statuses = sorted(categorical_mappings['Status']['classes'])
 property_types = sorted(categorical_mappings['property_type']['classes'])
+city_location_map = load_city_location_mapping(locations)
 
 # Create two columns for input form
 col1, col2 = st.columns(2)
@@ -97,18 +118,22 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("📍 Location Information")
 
-    location = st.selectbox(
-        "Location",
-        options=locations,
-        index=0,
-        help="Select the area/neighborhood"
-    )
-
     city = st.selectbox(
         "City",
         options=cities,
         index=0,
         help="Select the city"
+    )
+
+    filtered_locations = city_location_map.get(city, locations)
+    if not filtered_locations:
+        filtered_locations = locations
+
+    location = st.selectbox(
+        "Location",
+        options=filtered_locations,
+        index=0,
+        help="Select the area/neighborhood for the selected city"
     )
 
     latitude = st.number_input(
@@ -219,8 +244,8 @@ if predict_button:
         status_encoded = status_encoder.transform([status])[0] if status in status_encoder.classes_ else 0
         property_type_encoded = property_type_encoder.transform([property_type])[0] if property_type in property_type_encoder.classes_ else 0
 
-        # Create feature array in the correct order
-        features = np.array([[
+        # Create feature DataFrame in the correct order
+        feature_values = [
             location_encoded,
             city_encoded,
             latitude,
@@ -235,7 +260,8 @@ if predict_button:
             rooms_num,
             property_type_encoded,
             verification_days
-        ]])
+        ]
+        features = pd.DataFrame([feature_values], columns=feature_columns)
 
         # Make prediction
         prediction = model.predict(features)[0]

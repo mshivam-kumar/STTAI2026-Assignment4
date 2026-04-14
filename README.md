@@ -1,4 +1,13 @@
-﻿# Assignment 4: PropTech Startup Strategy - Rent Prediction Pipeline
+﻿---
+title: UrbanNest Rent Predictor
+emoji: 🏠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+---
+
+# Assignment 4: PropTech Startup Strategy - Rent Prediction Pipeline
 
 **Course**: Software Tools and Techniques for AI
 

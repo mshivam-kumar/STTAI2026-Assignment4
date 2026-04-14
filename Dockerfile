@@ -21,11 +21,11 @@ COPY app.py .
 COPY models/ ./models/
 COPY Dataset/ ./Dataset/
 
-# Expose Streamlit port
-EXPOSE 8501
+# Expose default Hugging Face Space port
+EXPOSE 7860
 
-# Health check
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health || exit 1
+# Health check (supports Hugging Face dynamic PORT)
+HEALTHCHECK CMD sh -c 'curl --fail "http://localhost:${PORT:-7860}/_stcore/health" || exit 1'
 
-# Run Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# Run Streamlit app (bind to Hugging Face runtime port)
+CMD ["sh", "-c", "streamlit run app.py --server.port ${PORT:-7860} --server.address 0.0.0.0"]
