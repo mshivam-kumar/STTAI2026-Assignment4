@@ -1,0 +1,22 @@
+.claude/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.venv/
+venv/
+ENV/
+FINAL_CHECKLIST.md
+*.html
+*.txt
+!requirements.txt
+# models/*.pkl - Removed exclusion to allow instructor to see the model
