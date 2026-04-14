@@ -10,7 +10,7 @@ pinned: false
 # Assignment 4: PropTech Startup Strategy - Rent Prediction Pipeline
 
 ## 🚀 Hugging Face Space (Live App)
-https://huggingface.co/spaces/Aditya1506/urbannest-rent-predictor
+https://aditya1506-urbannest-rent-predictor.hf.space
 
 **Course**: Software Tools and Techniques for AI
 
