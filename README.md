@@ -125,7 +125,7 @@ docker build -t urbandnest-app .
 
 2. **Run the Docker Container:**
 ```bash
-docker run -d -p 8501:8501 --name urbandnest-container urbandnest-app
+docker run -d -p 8501:7860 --name urbandnest-container urbandnest-app
 ```
 
 3. **Check Container Status:**
