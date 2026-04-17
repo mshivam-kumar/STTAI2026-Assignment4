@@ -128,6 +128,16 @@ docker build -t urbandnest-app .
 docker run -d -p 8501:8501 --name urbandnest-container urbandnest-app
 ```
 
+3. **Check Container Status:**
+```bash
+docker ps | grep urbandnest
+```
+
+4. **Stop and Remove Container:**
+```bash
+docker stop urbandnest-container && docker rm urbandnest-container
+```
+
 Once the container is running, you can access the application at `http://localhost:8501`.
 
 ---
