@@ -114,6 +114,24 @@ You are provided with a dataset in the `Dataset` folder:
 
 ---
 
+## 🚀 Running Locally with Docker
+
+To build and run the application locally using Docker, follow these steps:
+
+1. **Build the Docker Image:**
+```bash
+docker build -t urbandnest-app .
+```
+
+2. **Run the Docker Container:**
+```bash
+docker run -d -p 8501:8501 --name urbandnest-container urbandnest-app
+```
+
+Once the container is running, you can access the application at `http://localhost:8501`.
+
+---
+
 ## Submission Guidelines
 Create a GitHub repository and push all your files. **Your repository MUST strictly be Private**. You must add your respective TA as a collaborator who will be taking your viva on the day of your submission so they can review your code.
 
